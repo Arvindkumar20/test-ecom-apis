@@ -21,10 +21,15 @@ app.get("/health", (req, res) => {
 
 app.use("/api/product",productRoute);
 
-// custoome console.error();
+
+// custoome console.log();
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
+  // console.log(err.stack);
+  res.status(500).json({
+    message:err.message||"server error",
+    name:err.name||"server error",
+    stack:err.stack||"no stack available"
+  });
 });
 
 app.listen(process.env.PORT || 3000, () => {
